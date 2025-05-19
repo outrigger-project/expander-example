@@ -1,0 +1,8 @@
+apiVersion: autoscaling.openshift.io/v1
+kind: ClusterAutoscaler
+metadata:
+  name: default
+spec:
+  scaleDown:
+    enabled: true
+    unneededTime: 10m

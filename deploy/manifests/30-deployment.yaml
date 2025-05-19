@@ -1,0 +1,36 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: autoscaler-expander
+  namespace: autoscaler-expander
+  labels:
+    app: autoscaler-expander
+spec:
+  template:
+    metadata:
+      name: autoscaler-expander
+      labels:
+        app: autoscaler-expander
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: autoscaler-expander
+          image: quay.io/aleskandrox/asd:expander
+          imagePullPolicy: Always
+          args:
+            - --cert-path=/certs/tls.crt
+            - --key-path=/certs/tls.key
+            - --port=7000
+          volumeMounts:
+            - mountPath: /certs
+              name: autoscaler-expander-certs
+              readOnly: true
+      volumes:
+        - name: autoscaler-expander-certs
+          secret:
+            secretName: autoscaler-expander-certs
+            defaultMode: 420
+  selector:
+    matchLabels:
+      app: autoscaler-expander

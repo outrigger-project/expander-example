@@ -1,0 +1,25 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  generateName: autoscaler-expander-test-
+  namespace: test
+spec:
+  completions: 30
+  parallelism: 30
+  template:
+    metadata:
+      labels:
+        app: autoscaler-expander
+    spec:
+      containers:
+        - name: autoscaler-expander-test
+          image: quay.io/centos/centos:stream9
+          command: [ "/bin/sh", "-c" ]
+          args: [ "sleep 30m" ]
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+      restartPolicy: Never
+  backoffLimit: 4
+  ttlSecondsAfterFinished: 3600

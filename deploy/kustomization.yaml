@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - manifests/00-cluster-autoscaler.yaml
+  - manifests/01-namespace.yaml
+  - manifests/10-cluster-pod-placement-config.yaml
+  - manifests/20-service.yaml
+  - manifests/30-deployment.yaml
+
+namespace: openshift-machine-api
